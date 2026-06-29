@@ -12,20 +12,33 @@ const SOCIALS = {
   linkedin: "https://linkedin.com/in/khushi-wadhwa",
 };
 
+// Marker accent per section (maps to tailwind colors.marker.*).
+const MARKERS = {
+  reading: "#a7e8d8", // teal
+  highlights: "#ffc2d1", // pink
+  eats: "#b9d4ff", // blue
+  header: "#ffe08a", // yellow
+};
+
 function Section({
   title,
+  accent,
   children,
   action,
 }: {
   title: string;
+  accent: string;
   children: React.ReactNode;
   action?: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-6">
+    <section
+      className="flex flex-col gap-6"
+      style={{ ["--marker" as string]: accent }}
+    >
       <div className="flex items-baseline justify-between gap-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">
-          {title}
+        <h2 className="font-display text-3xl leading-none">
+          <span className="marker">{title}</span>
         </h2>
         {action}
       </div>
@@ -41,18 +54,23 @@ export default async function Home() {
     <main className="mx-auto max-w-content px-6 py-16 sm:py-24">
       <div className="flex flex-col gap-16 sm:gap-20">
         {/* Header / Intro */}
-        <header className="flex flex-col gap-4">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            khushi wadhwa
-          </h1>
-          <p className="text-lg text-ink">
-            building, reading, eating.
+        <header
+          className="flex flex-col gap-4"
+          style={{ ["--marker" as string]: MARKERS.header }}
+        >
+          <p className="font-sans text-xs uppercase tracking-[0.2em] text-muted">
+            {new Date().toLocaleDateString("en-US", {
+              month: "long",
+              year: "numeric",
+            })}
           </p>
-          <p className="max-w-prose text-base leading-relaxed text-muted">
-            welcome to my corner of the internet. a running snapshot of 
-            what&apos;s been keeping me busy.
+          <h1 className="font-display text-6xl leading-none">khushi wadhwa</h1>
+          <p className="text-xl text-ink">building, reading, eating.</p>
+          <p className="max-w-prose text-lg leading-relaxed text-muted">
+            welcome to my corner of the internet. a running journal of what&apos;s
+            been keeping me busy.
           </p>
-          <nav className="flex flex-wrap gap-x-5 gap-y-2 pt-1 text-sm">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2 pt-1 text-lg">
             <a
               href={SOCIALS.github}
               target="_blank"
@@ -77,7 +95,8 @@ export default async function Home() {
 
         {/* Currently Reading */}
         <Section
-          title="Currently Reading"
+          title="currently reading"
+          accent={MARKERS.reading}
           action={
             <a
               href="https://www.goodreads.com/user/show/169322661-khushi"
@@ -94,7 +113,8 @@ export default async function Home() {
 
         {/* Highlights */}
         <Section
-          title="Highlights"
+          title="highlights"
+          accent={MARKERS.highlights}
           action={
             <a
               href="https://curius.app/khushi-wadhwa"
@@ -111,7 +131,8 @@ export default async function Home() {
 
         {/* Good Eats */}
         <Section
-          title="Good Eats"
+          title="good eats"
+          accent={MARKERS.eats}
           action={
             <a
               href="https://beliapp.co/app/khushi02"
@@ -127,9 +148,14 @@ export default async function Home() {
         </Section>
 
         {/* Footer */}
-        <footer className="flex flex-col gap-3 border-t border-line pt-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} Khushi Wadhwa</span>
-          <nav className="flex gap-x-5">
+        <footer className="flex flex-col gap-3 border-t border-line pt-8 text-base text-muted sm:flex-row sm:items-center sm:justify-between">
+          <span className="font-display text-xl text-ink">
+            © {new Date().getFullYear()} khushi wadhwa
+          </span>
+          <nav
+            className="flex gap-x-5"
+            style={{ ["--marker" as string]: MARKERS.header }}
+          >
             <a
               href={SOCIALS.github}
               target="_blank"

@@ -4,6 +4,7 @@
 
 :root {
   color-scheme: light;
+  --dot: #d9d6cb; /* dot-grid color on paper */
 }
 
 html {
@@ -11,10 +12,53 @@ html {
 }
 
 body {
-  @apply bg-white text-ink antialiased;
+  @apply bg-paper text-ink antialiased;
+  /* Continuous bullet-journal dot grid behind everything. */
+  background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
 }
 
-/* Subtle hover underline for links */
-.link {
-  @apply text-ink underline decoration-line decoration-1 underline-offset-4 transition-colors hover:decoration-ink;
+@layer components {
+  /* Highlighter swipe behind text. Accent color set per-use via --marker. */
+  .marker {
+    background-image: linear-gradient(
+      to top,
+      var(--marker, theme(colors.marker.yellow)) 0,
+      var(--marker, theme(colors.marker.yellow)) 45%,
+      transparent 45%,
+      transparent 100%
+    );
+    background-repeat: no-repeat;
+    /* Sit slightly wider than the text for a hand-swiped look. */
+    padding: 0 0.15em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Colored leading marker for rapid-log list items. */
+  .bujo-bullet {
+    @apply relative pl-6;
+  }
+  .bujo-bullet::before {
+    content: "•";
+    @apply absolute left-0 top-0 font-display text-xl leading-none;
+    color: var(--marker, theme(colors.marker.yellow));
+  }
+  .bujo-bullet--arrow::before {
+    content: ">";
+    @apply text-base;
+  }
+  .bujo-bullet--circle::before {
+    content: "○";
+  }
+
+  /* Hand-drawn underline for links. */
+  .link {
+    @apply text-ink underline decoration-[1.5px] underline-offset-4 transition-colors;
+    text-decoration-color: var(--marker, theme(colors.line));
+  }
+  .link:hover {
+    text-decoration-color: theme(colors.ink);
+  }
 }

@@ -23,16 +23,19 @@ export default function Highlights() {
   return (
     <ul className="flex flex-col gap-5">
       {items.map((item) => (
-        <li key={item.url + item.title} className="flex flex-col gap-1">
+        <li
+          key={item.url + item.title}
+          className="bujo-bullet bujo-bullet--arrow flex flex-col gap-0.5"
+        >
           <a
             href={item.url}
             target="_blank"
             rel="noreferrer"
-            className="text-base font-medium hover:underline hover:underline-offset-4"
+            className="text-lg leading-snug hover:underline hover:underline-offset-4"
           >
             {item.title}
           </a>
-          <p className="text-xs text-muted">
+          <p className="font-sans text-xs text-muted">
             {[item.source, formatDate(item.date)].filter(Boolean).join(" · ")}
           </p>
         </li>

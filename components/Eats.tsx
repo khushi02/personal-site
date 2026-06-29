@@ -15,18 +15,23 @@ export default function Eats() {
       {items.map((item) => (
         <li
           key={item.name + item.city}
-          className="flex items-start justify-between gap-4 py-4 first:pt-0"
+          className="bujo-bullet bujo-bullet--circle flex items-start justify-between gap-4 py-4 first:pt-0"
         >
           <div className="flex flex-col gap-0.5">
-            <span className="text-base font-medium">{item.name}</span>
+            <span className="text-lg leading-snug">{item.name}</span>
             {item.city && (
-              <span className="text-xs text-muted">{item.city}</span>
+              <span className="font-sans text-xs text-muted">{item.city}</span>
             )}
             {item.note && (
-              <span className="mt-1 text-sm text-muted">{item.note}</span>
+              <span className="mt-1 font-sans text-sm text-muted">
+                {item.note}
+              </span>
             )}
           </div>
-          <span className="shrink-0 text-sm tabular-nums text-ink">
+          <span
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold tabular-nums text-ink"
+            style={{ backgroundColor: "var(--marker)" }}
+          >
             {item.rating.toFixed(1)}
           </span>
         </li>

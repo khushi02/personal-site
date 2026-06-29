@@ -85,10 +85,16 @@ async function tryRss(): Promise<Book[]> {
     if (!title) continue;
     const cover =
       tag(item, "book_large_image_url") ?? tag(item, "book_image_url");
+    // Prefer the book's own Goodreads page (/book/show/{id}) over the
+    // user's review page that the <link> tag points at.
+    const bookId = tag(item, "book_id");
+    const link = bookId
+      ? `https://www.goodreads.com/book/show/${bookId}`
+      : tag(item, "link") ?? PROFILE_URL;
     books.push({
       title,
       author: tag(item, "author_name") ?? "",
-      link: tag(item, "link") ?? PROFILE_URL,
+      link,
       cover: upscaleCover(cover),
     });
   }
