@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-ink antialiased;
+}
+
+/* Subtle hover underline for links */
+.link {
+  @apply text-ink underline decoration-line decoration-1 underline-offset-4 transition-colors hover:decoration-ink;
+}

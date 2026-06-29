@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Placeholder Restaurant",
+    "city": "New York, NY",
+    "rating": 9.4,
+    "note": "Best pasta in the city — go for the cacio e pepe."
+  },
+  {
+    "name": "Placeholder Cafe",
+    "city": "San Francisco, CA",
+    "rating": 9.1,
+    "note": "Quiet corner spot, excellent pour-over and pastries."
+  },
+  {
+    "name": "Placeholder Taqueria",
+    "city": "Austin, TX",
+    "rating": 8.9,
+    "note": "Al pastor tacos worth the line."
+  }
+]
