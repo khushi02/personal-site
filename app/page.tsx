@@ -54,7 +54,7 @@ export default async function Home() {
           <h1 className="font-display text-5xl leading-[3.5rem]">
             khushi wadhwa
           </h1>
-          <p className="text-xl leading-7 text-ink">building, reading, eating.</p>
+          <p className="text-xl leading-7 text-ink">a curated collection of places and ideas</p>
           <p className="max-w-prose text-lg leading-7 text-muted">
             welcome to my corner of the internet. a running journal of what&apos;s
             been keeping me busy.
