@@ -6,22 +6,21 @@ export default function BookList({ books }: { books: Book[] }) {
   }
 
   return (
-    <ul className="flex flex-col gap-5">
+    <ul className="flex flex-col gap-7">
       {books.map((book) => (
-        <li
-          key={book.title}
-          className="bujo-bullet flex flex-col gap-0.5"
-        >
+        <li key={book.title} className="bujo-bullet flex flex-col">
           <a
             href={book.link}
             target="_blank"
             rel="noreferrer"
-            className="text-lg leading-snug hover:underline hover:underline-offset-4"
+            className="text-base leading-7 hover:underline hover:underline-offset-4"
           >
             {book.title}
           </a>
           {book.author && (
-            <p className="font-sans text-xs text-muted">{book.author}</p>
+            <p className="font-sans text-xs leading-7 text-muted">
+              {book.author}
+            </p>
           )}
         </li>
       ))}

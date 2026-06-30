@@ -4,7 +4,8 @@
 
 :root {
   color-scheme: light;
-  --dot: #d9d6cb; /* dot-grid color on paper */
+  --dot: #d8cfbd; /* warm taupe dot-grid color */
+  --row: 1.75rem; /* baseline unit — text + dot grid share this rhythm (28px) */
 }
 
 html {
@@ -13,44 +14,57 @@ html {
 
 body {
   @apply bg-paper text-ink antialiased;
-  /* Continuous bullet-journal dot grid behind everything. */
+  /* Text sits "in the lines": body line-height == dot-grid row height, so each
+     line of text occupies one band between dot rows. Keep vertical metrics in
+     multiples of --row (leading-7, py-14, etc.) so lines stay on the grid. */
+  line-height: var(--row);
   background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
-  background-size: 22px 22px;
-  background-position: -1px -1px;
+  background-size: var(--row) var(--row);
+  background-position: center top;
 }
 
 @layer components {
-  /* Highlighter swipe behind text. Accent color set per-use via --marker. */
+  /* Highlighter swipe behind text. Highlight color set via --marker
+     (sage by default for section headers). */
   .marker {
     background-image: linear-gradient(
       to top,
-      var(--marker, theme(colors.marker.yellow)) 0,
-      var(--marker, theme(colors.marker.yellow)) 45%,
+      var(--marker, #c6d0ac) 0,
+      var(--marker, #c6d0ac) 45%,
       transparent 45%,
       transparent 100%
     );
     background-repeat: no-repeat;
-    /* Sit slightly wider than the text for a hand-swiped look. */
     padding: 0 0.15em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
 
-  /* Colored leading marker for rapid-log list items. */
+  /* Colored leading marker, vertically centered in the first text row so the
+     bullet lands "in the middle of the line". Terracotta by default. */
   .bujo-bullet {
     @apply relative pl-6;
   }
   .bujo-bullet::before {
     content: "•";
-    @apply absolute left-0 top-0 font-display text-xl leading-none;
-    color: var(--marker, theme(colors.marker.yellow));
+    @apply absolute left-0 top-0 flex items-center font-display;
+    height: var(--row);
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--bullet, #c1714f);
   }
   .bujo-bullet--arrow::before {
     content: ">";
-    @apply text-base;
+    font-size: 1rem;
   }
   .bujo-bullet--circle::before {
     content: "○";
+  }
+
+  /* Sticky-note card for highlights. */
+  .postit {
+    @apply rounded-sm p-4 shadow-md;
+    background-color: var(--note, #f0dd9a);
   }
 
   /* Hand-drawn underline for links. */
@@ -59,6 +73,6 @@ body {
     text-decoration-color: var(--marker, theme(colors.line));
   }
   .link:hover {
-    text-decoration-color: theme(colors.ink);
+    text-decoration-color: theme(colors.terracotta.DEFAULT);
   }
 }

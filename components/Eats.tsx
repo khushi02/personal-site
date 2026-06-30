@@ -1,41 +1,67 @@
-import eats from "@/data/eats.json";
+import eatsData from "@/data/eats.json";
 
-type Eat = {
+type Spot = {
   name: string;
-  city: string;
   rating: number;
-  note: string;
+  note?: string;
 };
 
-export default function Eats() {
-  const items = (eats as Eat[]).slice(0, 10);
+type EatsData = {
+  restaurants: Spot[];
+  drinks: Spot[];
+  coffee: Spot[];
+};
 
+const data = eatsData as EatsData;
+
+const CATEGORIES: { key: keyof EatsData; label: string }[] = [
+  { key: "restaurants", label: "restaurants" },
+  { key: "drinks", label: "drinks" },
+  { key: "coffee", label: "coffee" },
+];
+
+function Column({ label, spots }: { label: string; spots: Spot[] }) {
   return (
-    <ul className="flex flex-col divide-y divide-line">
-      {items.map((item) => (
-        <li
-          key={item.name + item.city}
-          className="bujo-bullet bujo-bullet--circle flex items-start justify-between gap-4 py-4 first:pt-0"
-        >
-          <div className="flex flex-col gap-0.5">
-            <span className="text-lg leading-snug">{item.name}</span>
-            {item.city && (
-              <span className="font-sans text-xs text-muted">{item.city}</span>
-            )}
-            {item.note && (
-              <span className="mt-1 font-sans text-sm text-muted">
-                {item.note}
-              </span>
-            )}
-          </div>
-          <span
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold tabular-nums text-ink"
-            style={{ backgroundColor: "var(--marker)" }}
+    <div className="flex flex-col gap-7">
+      {/* Subheader — terracotta */}
+      <h3
+        className="font-display text-xl leading-7"
+        style={{ ["--marker" as string]: "#e0a98c" }}
+      >
+        <span className="marker">{label}</span>
+      </h3>
+      <ul className="flex flex-col gap-7">
+        {spots.slice(0, 5).map((spot) => (
+          <li
+            key={spot.name}
+            className="bujo-bullet flex items-center justify-between gap-3"
           >
-            {item.rating.toFixed(1)}
-          </span>
-        </li>
+            <span className="flex flex-col">
+              <span className="text-lg leading-7">{spot.name}</span>
+              {spot.note && (
+                <span className="font-sans text-xs leading-7 text-muted">
+                  {spot.note}
+                </span>
+              )}
+            </span>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay-light font-sans text-xs font-semibold tabular-nums text-ink">
+              {spot.rating.toFixed(1)}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Eats() {
+  return (
+    <div className="grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-6 sm:divide-x sm:divide-line">
+      {CATEGORIES.map((c, i) => (
+        <div key={c.key} className={i > 0 ? "sm:pl-6" : ""}>
+          <Column label={c.label} spots={data[c.key]} />
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

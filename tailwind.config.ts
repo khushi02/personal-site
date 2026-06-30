@@ -16,17 +16,15 @@ const config: Config = {
         content: "42rem",
       },
       colors: {
-        ink: "#1a1a1a",
-        muted: "#6b6b6b",
-        line: "#e5e5e5",
-        paper: "#fcfbf7",
-        // Highlighter / marker accents — one per section.
-        marker: {
-          yellow: "#ffe08a",
-          teal: "#a7e8d8",
-          pink: "#ffc2d1",
-          blue: "#b9d4ff",
-        },
+        ink: "#2f2b26",
+        muted: "#8a8276",
+        line: "#e4ddd0",
+        paper: "#f7f3ea",
+        // Earth-tone accents.
+        sage: { light: "#c6d0ac", DEFAULT: "#9caa7c" }, // section headers
+        terracotta: { light: "#e0a98c", DEFAULT: "#c1714f" }, // subheaders + bullets
+        clay: { light: "#dcc8aa", DEFAULT: "#b89a78" }, // complementary brown
+        postit: "#f0dd9a", // sticky-note yellow
       },
     },
   },
