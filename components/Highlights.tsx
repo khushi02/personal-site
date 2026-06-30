@@ -24,7 +24,7 @@ export default function Highlights() {
   const items = (highlights as Highlight[]).slice(0, 5);
 
   return (
-    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, i) => (
         <li
           key={item.url + item.title}

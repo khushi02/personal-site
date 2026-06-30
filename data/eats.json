@@ -1,23 +1,98 @@
 {
   "restaurants": [
-    { "name": "Placeholder Restaurant One", "rating": 9.6, "note": "West Village" },
-    { "name": "Placeholder Restaurant Two", "rating": 9.4, "note": "Lower East Side" },
-    { "name": "Placeholder Restaurant Three", "rating": 9.2, "note": "Williamsburg" },
-    { "name": "Placeholder Restaurant Four", "rating": 9.0, "note": "Flatiron" },
-    { "name": "Placeholder Restaurant Five", "rating": 8.8, "note": "Hell's Kitchen" }
+    {
+      "name": "Uzuki",
+      "rating": 10.0,
+      "note": "Greenpoint, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=Uzuki%20restaurant%20Greenpoint%20Brooklyn%20NY"
+    },
+    {
+      "name": "Le Basque",
+      "rating": 9.9,
+      "note": "Union Square, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Le%20Basque%20restaurant%20Union%20Square%20Manhattan%20NY"
+    },
+    {
+      "name": "Ume",
+      "rating": 9.9,
+      "note": "Williamsburg, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=Ume%20omakase%20Williamsburg%20Brooklyn%20NY"
+    },
+    {
+      "name": "Mariscos El Submarino",
+      "rating": 9.9,
+      "note": "Greenpoint, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=Mariscos%20El%20Submarino%20Greenpoint%20Brooklyn%20NY"
+    },
+    {
+      "name": "Lingo",
+      "rating": 9.9,
+      "note": "Greenpoint, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=Lingo%20restaurant%20Greenpoint%20Brooklyn%20NY"
+    }
   ],
   "drinks": [
-    { "name": "Placeholder Bar One", "rating": 9.5, "note": "cocktails, East Village" },
-    { "name": "Placeholder Bar Two", "rating": 9.3, "note": "natural wine, Bushwick" },
-    { "name": "Placeholder Bar Three", "rating": 9.1, "note": "rooftop, Midtown" },
-    { "name": "Placeholder Bar Four", "rating": 8.9, "note": "dive, Greenpoint" },
-    { "name": "Placeholder Bar Five", "rating": 8.7, "note": "speakeasy, NoHo" }
+    {
+      "name": "The Collectors Bar",
+      "rating": 9.9,
+      "note": "Williamsburg, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=The%20Collectors%20Bar%20Williamsburg%20Brooklyn%20NY"
+    },
+    {
+      "name": "Patent Pending",
+      "rating": 9.8,
+      "note": "NoMad, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Patent%20Pending%20bar%20NoMad%20Manhattan%20NY"
+    },
+    {
+      "name": "Please Don't Tell",
+      "rating": 9.7,
+      "note": "East Village, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Please%20Don%27t%20Tell%20PDT%20bar%20East%20Village%20Manhattan%20NY"
+    },
+    {
+      "name": "Death & Co",
+      "rating": 9.6,
+      "note": "East Village, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Death%20and%20Co%20East%20Village%20Manhattan%20NY"
+    },
+    {
+      "name": "Katana Kitten",
+      "rating": 9.5,
+      "note": "West Village, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Katana%20Kitten%20bar%20West%20Village%20Manhattan%20NY"
+    }
   ],
   "coffee": [
-    { "name": "Placeholder Cafe One", "rating": 9.4, "note": "pour-over, SoHo" },
-    { "name": "Placeholder Cafe Two", "rating": 9.2, "note": "espresso, Nolita" },
-    { "name": "Placeholder Cafe Three", "rating": 9.0, "note": "matcha, Chelsea" },
-    { "name": "Placeholder Cafe Four", "rating": 8.8, "note": "pastries, Park Slope" },
-    { "name": "Placeholder Cafe Five", "rating": 8.6, "note": "quiet, UWS" }
+    {
+      "name": "Chicha San Chen",
+      "rating": 9.9,
+      "note": "Chinatown, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Chicha%20San%20Chen%20Chinatown%20Manhattan%20NY"
+    },
+    {
+      "name": "Maru Coffee",
+      "rating": 9.9,
+      "note": "Williamsburg, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=Maru%20Coffee%20Williamsburg%20Brooklyn%20NY"
+    },
+    {
+      "name": "Setsugekka",
+      "rating": 9.8,
+      "note": "East Village, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Setsugekka%20East%20Village%20Manhattan%20NY"
+    },
+    {
+      "name": "KIJITORA mini",
+      "rating": 9.7,
+      "note": "Williamsburg, Brooklyn",
+      "map": "https://www.google.com/maps/search/?api=1&query=KIJITORA%20mini%20Williamsburg%20Brooklyn%20NY"
+    },
+    {
+      "name": "Cha-An",
+      "rating": 9.7,
+      "note": "East Village, Manhattan",
+      "map": "https://www.google.com/maps/search/?api=1&query=Cha-An%20teahouse%20East%20Village%20Manhattan%20NY"
+    }
   ]
 }

@@ -7,6 +7,7 @@ type Spot = {
   name: string;
   rating: number;
   note?: string;
+  map?: string;
 };
 
 type EatsData = {
@@ -34,7 +35,20 @@ function SpotList({ spots }: { spots: Spot[] }) {
           className="bujo-bullet flex items-center justify-between gap-3"
         >
           <span className="flex flex-col">
-            <span className="text-lg leading-7">{spot.name}</span>
+            <span className="text-lg leading-7">
+              {spot.map ? (
+                <a
+                  href={spot.map}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline hover:underline-offset-4"
+                >
+                  {spot.name}
+                </a>
+              ) : (
+                spot.name
+              )}
+            </span>
             {spot.note && (
               <span className="font-sans text-xs leading-7 text-muted">
                 {spot.note}

@@ -1,11 +1,14 @@
 import BookList from "@/components/BookList";
 import Highlights from "@/components/Highlights";
+import Episodes from "@/components/Episodes";
 import Eats from "@/components/Eats";
 import SocialLinks from "@/components/Social";
 import { getCurrentlyReading } from "@/lib/goodreads";
+import { getRecentEpisodes } from "@/lib/youtube";
 
-// Re-fetch Goodreads data at most once a month (ISR).
-export const revalidate = 2592000; // 30 days
+// Revalidate the route weekly (ISR) so new YouTube episodes surface within a
+// week. Goodreads is unaffected — its own fetch keeps a 30-day cache.
+export const revalidate = 604800; // 7 days
 
 function SectionTitle({
   title,
@@ -38,7 +41,10 @@ function MoreLink({ href, label }: { href: string; label: string }) {
 }
 
 export default async function Home() {
-  const books = await getCurrentlyReading();
+  const [books, episodes] = await Promise.all([
+    getCurrentlyReading(),
+    getRecentEpisodes(),
+  ]);
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-14 sm:py-28 lg:max-w-6xl">
@@ -62,9 +68,22 @@ export default async function Home() {
           <SocialLinks />
         </header>
 
-        {/* Top spread: Currently Reading (left page) + Highlights (right page) */}
+        {/* Top spread: The Dry Run (left page) + Currently Reading (right page) */}
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-0">
           <section className="flex flex-col gap-7 lg:pr-12">
+            <SectionTitle
+              title="the dry run"
+              action={
+                <MoreLink
+                  href="https://www.youtube.com/@TheDryRunPod"
+                  label="youtube"
+                />
+              }
+            />
+            <Episodes episodes={episodes} />
+          </section>
+
+          <section className="flex flex-col gap-7 lg:border-l lg:border-line lg:pl-12">
             <SectionTitle
               title="currently reading"
               action={
@@ -76,25 +95,26 @@ export default async function Home() {
             />
             <BookList books={books} />
           </section>
-
-          <section className="flex flex-col gap-7 lg:border-l lg:border-line lg:pl-12">
-            <SectionTitle
-              title="highlights"
-              action={
-                <MoreLink
-                  href="https://curius.app/khushi-wadhwa"
-                  label="see more on curius"
-                />
-              }
-            />
-            <Highlights />
-          </section>
         </div>
+
+        {/* Highlights — full width */}
+        <section className="flex flex-col gap-7">
+          <SectionTitle
+            title="highlights"
+            action={
+              <MoreLink
+                href="https://curius.app/khushi-wadhwa"
+                label="see more on curius"
+              />
+            }
+          />
+          <Highlights />
+        </section>
 
         {/* Good Eats — three NYC columns, full width */}
         <section className="flex flex-col gap-7">
           <SectionTitle
-            title="good eats — nyc"
+            title="nyc hit list"
             action={
               <MoreLink
                 href="https://beliapp.co/app/khushi02"
