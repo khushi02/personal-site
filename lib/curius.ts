@@ -6,8 +6,9 @@
 //
 // Each link carries a `highlights[]` array — the passages highlighted while
 // reading ("notes"). We surface the highlighted text as the post-it body and the
-// article's author as the subtext. Fetched at build time (weekly ISR), limited to
-// the last 7 days and capped so the notes fit on a single row.
+// article's author as the subtext. Fetched at build time (ISR every 3 days),
+// limited to the last 7 days and capped so the notes fit on a single row. When an
+// author has multiple highlights, we keep only the shortest one.
 
 export type Highlight = {
   text: string; // the highlighted passage
@@ -40,15 +41,27 @@ type CuriusLink = {
 
 const HARDCODED_FALLBACK: Highlight[] = [
   {
+    text: "we’re living through this kind of eclipse of the human intellect where we’re in the final days of humans being the primary actors on this planet",
+    author: "borretti.me",
+    url: "https://borretti.me/article/no-one-escapes-the-permanent-underclass",
+    date: "2026-07-01",
+  },
+  {
     text: "Remember, velocity is a vector (it requires direction) and momentum requires mass (the work needs to matter).",
     author: "Yoni Rechtman",
     url: "https://99d.substack.com/p/there-will-only-be-four-jobs",
     date: "2026-06-30",
   },
   {
+    text: "An online, distributed generation has developed a coherent aesthetic category for the embodied structure of contemporary, online life, and Backrooms…",
+    author: "katie",
+    url: "https://blog.katiechiou.xyz/p/people-are-missing-the-point-about",
+    date: "2026-06-29",
+  },
+  {
     text: "the internet is too optimized now, too paved over. everybody's just paying rent to the feed.",
     author: "kashvi",
-    url: "https://kashvi.substack.com/",
+    url: "https://kashvi.substack.com/p/a-memoir-for-the-internet-we-lost",
     date: "2026-06-24",
   },
 ];
@@ -79,10 +92,11 @@ function truncate(s: string): string {
   return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).trimEnd() + "…";
 }
 
+// Returns every highlight (untruncated) across all links, so callers can dedupe.
 async function tryApi(): Promise<Highlight[]> {
   const res = await fetch(LINKS_URL, {
     headers: HEADERS,
-    next: { revalidate: 604800 }, // weekly
+    next: { revalidate: 259200 }, // every 3 days
   });
   if (!res.ok) throw new Error(`Curius HTTP ${res.status}`);
 
@@ -92,17 +106,16 @@ async function tryApi(): Promise<Highlight[]> {
   const out: Highlight[] = [];
   for (const l of saved) {
     if (!l.link || !l.highlights?.length) continue;
-    // Use the most recent highlight from the article.
-    const h = [...l.highlights].sort(
-      (a, b) => +new Date(b.createdDate) - +new Date(a.createdDate)
-    )[0];
-    if (!h?.highlight?.trim()) continue;
-    out.push({
-      text: truncate(h.highlight),
-      author: parseAuthor(l.title ?? "", l.link),
-      url: l.link,
-      date: h.createdDate || l.createdDate,
-    });
+    const author = parseAuthor(l.title ?? "", l.link);
+    for (const h of l.highlights) {
+      if (!h?.highlight?.trim()) continue;
+      out.push({
+        text: h.highlight.trim(),
+        author,
+        url: l.link,
+        date: h.createdDate || l.createdDate,
+      });
+    }
   }
   return out;
 }
@@ -112,12 +125,27 @@ export async function getRecentHighlights(): Promise<Highlight[]> {
     const all = await tryApi();
     if (all.length > 0) {
       const cutoff = Date.now() - WEEK_MS;
-      const lastWeek = all.filter((h) => {
+      const recent = all.filter((h) => {
         const t = new Date(h.date).getTime();
         return !Number.isNaN(t) && t >= cutoff;
       });
-      const chosen = lastWeek.length > 0 ? lastWeek : all;
-      return chosen.slice(0, MAX_HIGHLIGHTS);
+      const pool = recent.length > 0 ? recent : all;
+
+      // One note per author; when an author has several highlights, keep the
+      // shortest so the post-its stay punchy.
+      const byAuthor = new Map<string, Highlight>();
+      for (const h of pool) {
+        const key = h.author.toLowerCase();
+        const current = byAuthor.get(key);
+        if (!current || h.text.length < current.text.length) {
+          byAuthor.set(key, h);
+        }
+      }
+
+      return [...byAuthor.values()]
+        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+        .slice(0, MAX_HIGHLIGHTS)
+        .map((h) => ({ ...h, text: truncate(h.text) }));
     }
     console.warn("[curius] API returned no highlights, using hardcoded");
   } catch (err) {

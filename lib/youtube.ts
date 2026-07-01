@@ -26,6 +26,11 @@ const MAX_EPISODES = 5;
 // Seeded from the live feed — used only if the network fetch fails.
 const HARDCODED_FALLBACK: Episode[] = [
   {
+    title: "What AI Trading Agents Are Doing With Your Money | Amy Zhao, IC3",
+    link: "https://www.youtube.com/watch?v=RXZt5PGgyaI",
+    date: "2026-07-01",
+  },
+  {
     title:
       "Are Crypto Wallets Dead? The Future of Embedded Wallets & Agentic Payments",
     link: "https://www.youtube.com/watch?v=53myRcV3U9k",
@@ -44,11 +49,6 @@ const HARDCODED_FALLBACK: Episode[] = [
   {
     title: "Does Fairness Matter in Prediction Markets?",
     link: "https://www.youtube.com/watch?v=hZcVymxZ-0I",
-    date: "2026-05-14",
-  },
-  {
-    title: "Innovation Isn't the Hard Part in Payments",
-    link: "https://www.youtube.com/watch?v=zXwOtc47w_0",
     date: "2026-05-14",
   },
 ];
