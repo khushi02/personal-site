@@ -3,6 +3,7 @@ import Highlights from "@/components/Highlights";
 import Episodes from "@/components/Episodes";
 import Eats from "@/components/Eats";
 import SocialLinks from "@/components/Social";
+import NowPlaying from "@/components/NowPlaying";
 import { getCurrentlyReading } from "@/lib/goodreads";
 import { getRecentEpisodes } from "@/lib/youtube";
 import { getRecentHighlights } from "@/lib/curius";
@@ -49,7 +50,8 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-14 sm:py-28 lg:max-w-6xl">
+    <main className="relative mx-auto max-w-2xl px-6 py-14 sm:py-28 lg:max-w-6xl">
+      <NowPlaying />
       <div className="flex flex-col gap-14">
         {/* Header / Intro */}
         <header className="flex flex-col gap-7">
