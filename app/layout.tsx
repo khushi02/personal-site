@@ -24,8 +24,8 @@ const display = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "khushi's journal",
-  description: "A bullet journal of what I'm reading, eating, and pondering.",
+  title: "khushi's notebook",
+  description: "a curated collection of places and ideas",
 };
 
 export default function RootLayout({

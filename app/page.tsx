@@ -5,6 +5,7 @@ import Eats from "@/components/Eats";
 import SocialLinks from "@/components/Social";
 import { getCurrentlyReading } from "@/lib/goodreads";
 import { getRecentEpisodes } from "@/lib/youtube";
+import { getRecentHighlights } from "@/lib/curius";
 
 // Revalidate the route weekly (ISR) so new YouTube episodes surface within a
 // week. Goodreads is unaffected — its own fetch keeps a 30-day cache.
@@ -41,9 +42,10 @@ function MoreLink({ href, label }: { href: string; label: string }) {
 }
 
 export default async function Home() {
-  const [books, episodes] = await Promise.all([
+  const [books, episodes, highlights] = await Promise.all([
     getCurrentlyReading(),
     getRecentEpisodes(),
+    getRecentHighlights(),
   ]);
 
   return (
@@ -58,12 +60,56 @@ export default async function Home() {
             })}
           </p>
           <h1 className="font-display text-5xl leading-[3.5rem]">
-            khushi wadhwa
+            khushi's notebook
           </h1>
           <p className="text-xl leading-7 text-ink">a curated collection of places and ideas</p>
           <p className="max-w-prose text-lg leading-7 text-muted">
-            welcome to my corner of the internet. a running journal of what&apos;s
-            been keeping me busy.
+            currently @{" "}
+            <a
+              href="https://predicate.io/"
+              target="_blank"
+              rel="noreferrer"
+              className="link text-muted"
+            >
+              predicate
+            </a>
+            . previously @{" "}
+            <a
+              href="https://geometry.xyz"
+              target="_blank"
+              rel="noreferrer"
+              className="link text-muted"
+            >
+              geometry
+            </a>
+            ,{" "}
+            <a
+              href="https://www.generalcatalyst.com/stories/c14-ramping-the-next-billion-digital-asset-users"
+              target="_blank"
+              rel="noreferrer"
+              className="link text-muted"
+            >
+              c14
+            </a>
+            ,{" "}
+            <a
+              href="https://www.spacex.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="link text-muted"
+            >
+              spacex
+            </a>
+            ,{" "}
+            <a
+              href="https://www.cs.cmu.edu/index"
+              target="_blank"
+              rel="noreferrer"
+              className="link text-muted"
+            >
+              carnegie mellon
+            </a>
+            .
           </p>
           <SocialLinks />
         </header>
@@ -108,7 +154,7 @@ export default async function Home() {
               />
             }
           />
-          <Highlights />
+          <Highlights highlights={highlights} />
         </section>
 
         {/* Good Eats — three NYC columns, full width */}
