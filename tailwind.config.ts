@@ -9,22 +9,19 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        hand: ["var(--font-hand)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "var(--font-hand)", "cursive"],
+        serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
       },
       maxWidth: {
         content: "42rem",
       },
       colors: {
-        ink: "#2f2b26",
-        muted: "#8a8276",
-        line: "#e4ddd0",
-        paper: "#f7f3ea",
-        // Earth-tone accents.
-        sage: { light: "#c6d0ac", DEFAULT: "#9caa7c" }, // section headers
-        terracotta: { light: "#e0a98c", DEFAULT: "#c1714f" }, // subheaders + bullets
-        clay: { light: "#dcc8aa", DEFAULT: "#b89a78" }, // complementary brown
-        postit: "#f0dd9a", // sticky-note yellow
+        // Japandi: warm greige paper, soft charcoal ink, hairline borders,
+        // one restrained terracotta accent.
+        ink: "#33302b",
+        muted: "#928c80",
+        line: "#d0c7b3",
+        paper: "#e8e0cf",
+        terracotta: "#a75f3b",
       },
     },
   },

@@ -21,10 +21,8 @@ function SectionTitle({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex h-7 items-center justify-between gap-4">
-      <h2 className="font-display text-3xl leading-7">
-        <span className="marker">{title}</span>
-      </h2>
+    <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
+      <h2 className="label">{title}</h2>
       {action}
     </div>
   );
@@ -36,9 +34,17 @@ function MoreLink({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="link text-sm leading-7 text-muted"
+      className="label transition-colors hover:text-terracotta"
     >
       {label}
+    </a>
+  );
+}
+
+function BioLink({ href, children }: { href: string; children: string }) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className="link text-ink">
+      {children}
     </a>
   );
 }
@@ -51,75 +57,42 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="relative mx-auto max-w-2xl px-6 py-14 sm:py-28 lg:max-w-6xl">
+    <main className="relative mx-auto max-w-2xl px-6 py-16 sm:py-28 lg:max-w-6xl">
       <NowPlaying />
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-16">
         {/* Header / Intro */}
-        <header className="flex flex-col gap-7">
-          <p className="font-sans text-xs uppercase leading-7 tracking-[0.2em] text-muted">
+        <header className="flex flex-col gap-5">
+          <p className="label">
             {new Date().toLocaleDateString("en-US", {
               month: "long",
               year: "numeric",
             })}
           </p>
-          <h1 className="font-display text-5xl leading-[3.5rem]">
-            khushi's notebook
+          <h1 className="font-serif text-5xl tracking-tight text-ink">
+            khushi&apos;s notebook
           </h1>
-          <p className="text-xl leading-7 text-ink">a curated collection of places and ideas</p>
-          <p className="max-w-prose text-lg leading-7 text-muted">
-            currently @{" "}
-            <a
-              href="https://predicate.io/"
-              target="_blank"
-              rel="noreferrer"
-              className="link text-muted"
-            >
-              predicate
-            </a>
+          <p className="font-serif text-2xl italic text-muted">
+            a curated collection of places and ideas
+          </p>
+          <p className="max-w-prose text-sm leading-relaxed text-muted">
+            currently @ <BioLink href="https://predicate.io/">predicate</BioLink>
             . previously @{" "}
-            <a
-              href="https://geometry.xyz"
-              target="_blank"
-              rel="noreferrer"
-              className="link text-muted"
-            >
-              geometry
-            </a>
-            ,{" "}
-            <a
-              href="https://www.generalcatalyst.com/stories/c14-ramping-the-next-billion-digital-asset-users"
-              target="_blank"
-              rel="noreferrer"
-              className="link text-muted"
-            >
+            <BioLink href="https://geometry.xyz">geometry</BioLink>,{" "}
+            <BioLink href="https://www.generalcatalyst.com/stories/c14-ramping-the-next-billion-digital-asset-users">
               c14
-            </a>
-            ,{" "}
-            <a
-              href="https://www.spacex.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="link text-muted"
-            >
-              spacex
-            </a>
-            ,{" "}
-            <a
-              href="https://www.cs.cmu.edu/index"
-              target="_blank"
-              rel="noreferrer"
-              className="link text-muted"
-            >
-              carnegie mellon
-            </a>
+            </BioLink>
+            , <BioLink href="https://www.spacex.com/">spacex</BioLink>,{" "}
+            <BioLink href="https://www.cs.cmu.edu/index">carnegie mellon</BioLink>
             .
           </p>
-          <SocialLinks />
+          <div className="pt-1">
+            <SocialLinks />
+          </div>
         </header>
 
-        {/* Top spread: The Dry Run (left page) + Currently Reading (right page) */}
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-0">
-          <section className="flex flex-col gap-7 lg:pr-12">
+        {/* Top spread: The Dry Run (left) + Currently Reading (right) */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-0">
+          <section className="flex flex-col gap-6 lg:pr-14">
             <SectionTitle
               title="the dry run"
               action={
@@ -133,7 +106,7 @@ export default async function Home() {
             <Episodes episodes={episodes.slice(0, books.length)} />
           </section>
 
-          <section className="flex flex-col gap-7 lg:border-l lg:border-line lg:pl-12">
+          <section className="flex flex-col gap-6 lg:border-l lg:border-line lg:pl-14">
             <SectionTitle
               title="currently reading"
               action={
@@ -148,7 +121,7 @@ export default async function Home() {
         </div>
 
         {/* Highlights — full width */}
-        <section className="flex flex-col gap-7">
+        <section className="flex flex-col gap-6">
           <SectionTitle
             title="highlights"
             action={
@@ -162,7 +135,7 @@ export default async function Home() {
         </section>
 
         {/* Good Eats — three NYC columns, full width */}
-        <section className="flex flex-col gap-7">
+        <section className="flex flex-col gap-6">
           <SectionTitle
             title="nyc hit list"
             action={
@@ -176,8 +149,8 @@ export default async function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="flex flex-col gap-4 border-t border-line pt-7 text-base leading-7 text-muted sm:flex-row sm:items-center sm:justify-between">
-          <span className="font-display text-xl text-ink">
+        <footer className="flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <span className="label">
             © {new Date().getFullYear()} khushi wadhwa
           </span>
           <SocialLinks />

@@ -1,25 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Shantell_Sans, Caveat } from "next/font/google";
+import { Inter, EB_Garamond } from "next/font/google";
 import "./globals.css";
 
-// Clean sans, kept for dense / utility text (authors, ratings, notes).
+// Clean grotesque for labels, meta, and body copy.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
-// Primary handwriting face — legible at body size.
-const hand = Shantell_Sans({
+// Refined serif for names, titles, and quotes — the japandi editorial voice.
+const serif = EB_Garamond({
   subsets: ["latin"],
-  variable: "--font-hand",
-  display: "swap",
-});
-
-// Display / flourish face for big headers, dates, the journal title.
-const display = Caveat({
-  subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -34,11 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${hand.variable} ${display.variable}`}
-    >
-      <body className="font-hand">{children}</body>
+    <html lang="en" className={`${inter.variable} ${serif.variable}`}>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

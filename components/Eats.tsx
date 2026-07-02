@@ -24,54 +24,39 @@ const CATEGORIES: { key: keyof EatsData; label: string }[] = [
   { key: "coffee", label: "coffee" },
 ];
 
-const TERRACOTTA = "#e0a98c";
-
 function SpotList({ spots }: { spots: Spot[] }) {
   return (
-    <ul className="flex flex-col gap-7">
+    <ul className="flex flex-col divide-y divide-line">
       {spots.slice(0, 5).map((spot) => (
         <li
           key={spot.name}
-          className="bujo-bullet flex items-center justify-between gap-3"
+          className="flex items-baseline justify-between gap-3 py-3 first:pt-0"
         >
           <span className="flex flex-col">
-            <span className="text-lg leading-7">
-              {spot.map ? (
-                <a
-                  href={spot.map}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:underline hover:underline-offset-4"
-                >
-                  {spot.name}
-                </a>
-              ) : (
-                spot.name
-              )}
-            </span>
-            {spot.note && (
-              <span className="font-sans text-xs leading-7 text-muted">
-                {spot.note}
+            {spot.map ? (
+              <a
+                href={spot.map}
+                target="_blank"
+                rel="noreferrer"
+                className="font-serif text-base leading-snug text-ink transition-colors hover:text-terracotta"
+              >
+                {spot.name}
+              </a>
+            ) : (
+              <span className="font-serif text-base leading-snug text-ink">
+                {spot.name}
               </span>
             )}
+            {spot.note && (
+              <span className="mt-0.5 text-xs text-muted">{spot.note}</span>
+            )}
           </span>
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay-light font-sans text-xs font-semibold tabular-nums text-ink">
+          <span className="shrink-0 text-xs tabular-nums text-muted">
             {spot.rating.toFixed(1)}
           </span>
         </li>
       ))}
     </ul>
-  );
-}
-
-function Subheader({ label }: { label: string }) {
-  return (
-    <h3
-      className="font-display text-xl leading-7"
-      style={{ ["--marker" as string]: TERRACOTTA }}
-    >
-      <span className="marker">{label}</span>
-    </h3>
   );
 }
 
@@ -81,8 +66,8 @@ export default function Eats() {
   return (
     <>
       {/* Mobile: tabs you can switch between */}
-      <div className="flex flex-col gap-7 sm:hidden">
-        <div className="flex h-7 items-center gap-5" role="tablist">
+      <div className="flex flex-col gap-5 sm:hidden">
+        <div className="flex gap-6" role="tablist">
           {CATEGORIES.map((c) => {
             const isActive = c.key === active;
             return (
@@ -92,12 +77,13 @@ export default function Eats() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActive(c.key)}
-                className="font-display text-xl leading-7"
-                style={isActive ? { ["--marker" as string]: TERRACOTTA } : undefined}
+                className={`label border-b pb-2 transition-colors ${
+                  isActive
+                    ? "border-terracotta !text-ink"
+                    : "border-transparent"
+                }`}
               >
-                <span className={isActive ? "marker" : "text-muted"}>
-                  {c.label}
-                </span>
+                {c.label}
               </button>
             );
           })}
@@ -106,13 +92,10 @@ export default function Eats() {
       </div>
 
       {/* Desktop: three columns side by side */}
-      <div className="hidden gap-6 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-line">
-        {CATEGORIES.map((c, i) => (
-          <div
-            key={c.key}
-            className={`flex flex-col gap-7 ${i > 0 ? "sm:pl-6" : ""}`}
-          >
-            <Subheader label={c.label} />
+      <div className="hidden gap-8 sm:grid sm:grid-cols-3">
+        {CATEGORIES.map((c) => (
+          <div key={c.key} className="flex flex-col gap-4">
+            <h3 className="label border-b border-line pb-2">{c.label}</h3>
             <SpotList spots={data[c.key]} />
           </div>
         ))}

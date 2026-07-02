@@ -2,26 +2,28 @@ import type { Book } from "@/lib/goodreads";
 
 export default function BookList({ books }: { books: Book[] }) {
   if (!books.length) {
-    return <p className="text-muted">Nothing on the shelf right now.</p>;
+    return <p className="text-sm text-muted">Nothing on the shelf right now.</p>;
   }
 
   return (
-    <ul className="flex flex-col gap-7">
+    <ul className="flex flex-col divide-y divide-line">
       {books.map((book) => (
-        <li key={book.title} className="bujo-bullet flex flex-col">
+        <li key={book.title} className="py-4 first:pt-0">
           <a
             href={book.link}
             target="_blank"
             rel="noreferrer"
-            className="text-base leading-7 hover:underline hover:underline-offset-4"
+            className="group block"
           >
-            {book.title}
+            <span className="block font-serif text-lg leading-snug text-ink transition-colors group-hover:text-terracotta">
+              {book.title}
+            </span>
+            {book.author && (
+              <span className="mt-1 block text-xs text-muted">
+                {book.author}
+              </span>
+            )}
           </a>
-          {book.author && (
-            <p className="font-sans text-xs leading-7 text-muted">
-              {book.author}
-            </p>
-          )}
         </li>
       ))}
     </ul>

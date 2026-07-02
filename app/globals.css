@@ -4,8 +4,6 @@
 
 :root {
   color-scheme: light;
-  --dot: #d8cfbd; /* warm taupe dot-grid color */
-  --row: 1.75rem; /* baseline unit — text + dot grid share this rhythm (28px) */
 }
 
 html {
@@ -14,63 +12,52 @@ html {
 
 body {
   @apply bg-paper text-ink antialiased;
-  /* Text sits "in the lines": body line-height == dot-grid row height, so each
-     line of text occupies one band between dot rows. Keep vertical metrics in
-     multiples of --row (leading-7, py-14, etc.) so lines stay on the grid. */
-  line-height: var(--row);
-  background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
-  background-size: var(--row) var(--row);
-  background-position: center top;
+  font-feature-settings: "kern", "liga";
+  /* Troweled limewash plaster: a soft light bloom + gentle edge vignette for the
+     hand-applied falloff, an organic low-frequency mottle for the plaster
+     cloudiness, and a faint chalky grain on top. */
+  background-image:
+    radial-gradient(
+      90% 75% at 34% 20%,
+      rgba(255, 252, 245, 0.45),
+      transparent 66%
+    ),
+    radial-gradient(
+      130% 120% at 50% 42%,
+      transparent 52%,
+      rgba(120, 104, 78, 0.14) 100%
+    ),
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='700'%20height='700'%3E%3Cfilter%20id='c'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.014'%20numOctaves='2'%20seed='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23c)'%20opacity='0.09'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='p'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23p)'%20opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat, repeat, repeat;
+  background-size: auto, auto, 720px 720px, 170px 170px;
+  background-attachment: scroll;
 }
 
 @layer components {
-  /* Highlighter swipe behind text. Highlight color set via --marker
-     (sage by default for section headers). */
-  .marker {
-    background-image: linear-gradient(
-      to top,
-      var(--marker, #c6d0ac) 0,
-      var(--marker, #c6d0ac) 45%,
-      transparent 45%,
-      transparent 100%
-    );
-    background-repeat: no-repeat;
-    padding: 0 0.15em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+  /* Small letter-spaced uppercase label — the editorial menu voice. */
+  .label {
+    @apply font-sans text-[11px] uppercase tracking-[0.2em] text-muted;
   }
 
-  /* Colored leading marker, vertically centered in the first text row so the
-     bullet lands "in the middle of the line". Terracotta by default. */
-  .bujo-bullet {
-    @apply relative pl-6;
-  }
-  .bujo-bullet::before {
-    content: "•";
-    @apply absolute left-0 top-0 flex items-center font-display;
-    height: var(--row);
-    font-size: 1.25rem;
-    line-height: 1;
-    color: var(--bullet, #c1714f);
-  }
-  .bujo-bullet--arrow::before {
-    content: ">";
-    font-size: 1rem;
-  }
-  .bujo-bullet--circle::before {
-    content: "○";
+  /* Thin-bordered "menu card". */
+  .card {
+    @apply border border-line;
   }
 
-  /* Sticky-note card for highlights. */
-  .postit {
-    @apply rounded-sm p-4 shadow-md;
-    background-color: var(--note, #f0dd9a);
+  /* Understated link: underline appears on hover in the terracotta accent. */
+  .link {
+    @apply text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors;
+    text-decoration-color: transparent;
+  }
+  .link:hover {
+    text-decoration-color: theme(colors.terracotta);
   }
 
   /* "Now playing" equalizer bars — animate when playing, flat when muted. */
   .eq {
     @apply inline-flex items-end gap-[2px];
-    height: 12px;
+    height: 10px;
   }
   .eq > span {
     width: 2px;
@@ -101,14 +88,5 @@ body {
     50% {
       transform: scaleY(1);
     }
-  }
-
-  /* Hand-drawn underline for links. */
-  .link {
-    @apply text-ink underline decoration-[1.5px] underline-offset-4 transition-colors;
-    text-decoration-color: var(--marker, theme(colors.line));
-  }
-  .link:hover {
-    text-decoration-color: theme(colors.terracotta.DEFAULT);
   }
 }
