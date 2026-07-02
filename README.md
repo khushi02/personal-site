@@ -1,6 +1,6 @@
 # khushi's personal website
 
-A collection of things she's reading, eating, and pondering.
+A curated collection of places and ideas.
 
 Built with Next.js, Tailwind CSS, and TypeScript. Deployed on Vercel.
 
