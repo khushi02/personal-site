@@ -129,7 +129,8 @@ export default async function Home() {
                 />
               }
             />
-            <Episodes episodes={episodes} />
+            {/* Show as many episodes as there are books (when enough exist). */}
+            <Episodes episodes={episodes.slice(0, books.length)} />
           </section>
 
           <section className="flex flex-col gap-7 lg:border-l lg:border-line lg:pl-12">

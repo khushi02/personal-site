@@ -21,7 +21,9 @@ const HEADERS = {
   Accept: "application/xml,text/xml,*/*;q=0.8",
 };
 
-const MAX_EPISODES = 5;
+// Upper bound on how many episodes we fetch/keep. The page trims this down to
+// match the number of "currently reading" books, so keep enough headroom here.
+const MAX_EPISODES = 12;
 
 // Seeded from the live feed — used only if the network fetch fails.
 const HARDCODED_FALLBACK: Episode[] = [
@@ -49,6 +51,11 @@ const HARDCODED_FALLBACK: Episode[] = [
   {
     title: "Does Fairness Matter in Prediction Markets?",
     link: "https://www.youtube.com/watch?v=hZcVymxZ-0I",
+    date: "2026-05-14",
+  },
+  {
+    title: "Innovation Isn't the Hard Part in Payments",
+    link: "https://www.youtube.com/watch?v=zXwOtc47w_0",
     date: "2026-05-14",
   },
 ];
