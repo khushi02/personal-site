@@ -43,7 +43,12 @@ function MoreLink({ href, label }: { href: string; label: string }) {
 
 function BioLink({ href, children }: { href: string; children: string }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" className="link text-ink">
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="text-muted underline decoration-muted/50 decoration-1 underline-offset-[3px] transition-colors hover:decoration-terracotta"
+    >
       {children}
     </a>
   );
