@@ -114,7 +114,7 @@ export default function NowPlaying() {
           <span className="font-sans text-[10px] uppercase tracking-[0.2em]">
             now playing
           </span>
-          <span className="mt-0.5 font-serif text-sm italic">
+          <span className="mt-0.5 hidden font-serif text-sm italic sm:inline">
             {SONG} · {ARTIST}
           </span>
         </span>

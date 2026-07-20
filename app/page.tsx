@@ -73,7 +73,7 @@ export default async function Home() {
               year: "numeric",
             })}
           </p>
-          <h1 className="font-serif text-5xl tracking-tight text-ink">
+          <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">
             khushi&apos;s notebook
           </h1>
           <p className="font-serif text-2xl italic text-muted">
