@@ -27,7 +27,7 @@ const HEADERS = {
   Accept: "application/json",
 };
 
-const MAX_HIGHLIGHTS = 6;
+const MAX_HIGHLIGHTS = 4;
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const MAX_TEXT = 150; // keep quotes short enough to read as post-its
 

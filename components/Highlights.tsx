@@ -6,7 +6,7 @@ export default function Highlights({ highlights }: { highlights: Highlight[] }) 
   }
 
   return (
-    // One row on desktop — one column per note (up to 6). Stacks on smaller screens.
+    // One row on desktop — one column per note (up to 4). Stacks on smaller screens.
     <ul
       style={{ ["--cols" as string]: highlights.length }}
       className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:[grid-template-columns:repeat(var(--cols),minmax(0,1fr))]"
@@ -22,7 +22,7 @@ export default function Highlights({ highlights }: { highlights: Highlight[] }) 
             <p className="font-serif text-base leading-snug text-ink transition-colors group-hover:text-terracotta">
               {item.text}
             </p>
-            <p className="label border-t border-line pt-3">{item.author}</p>
+            <p className="label break-words border-t border-line pt-3">{item.author}</p>
           </a>
         </li>
       ))}
