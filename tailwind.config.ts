@@ -15,13 +15,14 @@ const config: Config = {
         content: "42rem",
       },
       colors: {
-        // Japandi: warm greige paper, soft charcoal ink, hairline borders,
-        // one restrained terracotta accent.
-        ink: "#33302b",
-        muted: "#928c80",
-        line: "#d0c7b3",
-        paper: "#e8e0cf",
-        terracotta: "#a75f3b",
+        // Ochre Sunset: a warm cream paper, soft charcoal ink, hairline borders,
+        // a brighter terracotta for hovers, and a mustard-ochre utility accent.
+        ink: "#3a3128",
+        muted: "#948b7b",
+        line: "#d6c9ad",
+        paper: "#ece1cb",
+        terracotta: "#b05e34",
+        ochre: "#9a6f22",
       },
     },
   },

@@ -1,4 +1,5 @@
 import BookList from "@/components/BookList";
+import Projects from "@/components/Projects";
 import Highlights from "@/components/Highlights";
 import Episodes from "@/components/Episodes";
 import Eats from "@/components/Eats";
@@ -34,7 +35,7 @@ function MoreLink({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="label transition-colors hover:text-terracotta"
+      className="label text-ochre transition-colors hover:text-terracotta"
     >
       {label}
     </a>
@@ -94,6 +95,15 @@ export default async function Home() {
             <SocialLinks />
           </div>
         </header>
+
+        {/* Projects — featured from GitHub, full width */}
+        <section className="flex flex-col gap-6">
+          <SectionTitle
+            title="projects"
+            action={<MoreLink href="https://github.com/khushi02" label="github" />}
+          />
+          <Projects />
+        </section>
 
         {/* Top spread: The Dry Run (left) + Currently Reading (right) */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-0">

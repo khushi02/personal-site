@@ -118,7 +118,7 @@ export default function NowPlaying() {
             {SONG} · {ARTIST}
           </span>
         </span>
-        <span className="eq" data-playing={playing} aria-hidden>
+        <span className="eq text-ochre" data-playing={playing} aria-hidden>
           <span />
           <span />
           <span />

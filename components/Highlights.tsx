@@ -22,7 +22,7 @@ export default function Highlights({ highlights }: { highlights: Highlight[] }) 
             <p className="font-serif text-base leading-snug text-ink transition-colors group-hover:text-terracotta">
               {item.text}
             </p>
-            <p className="label break-words border-t border-line pt-3">{item.author}</p>
+            <p className="label text-ochre break-words border-t border-line pt-3">{item.author}</p>
           </a>
         </li>
       ))}

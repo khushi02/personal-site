@@ -29,7 +29,7 @@ export default function SocialLinks({ className = "" }: { className?: string }) 
           target="_blank"
           rel="noreferrer"
           aria-label={l.name}
-          className="text-ink/60 transition-colors hover:text-terracotta"
+          className="text-ink/60 transition-colors hover:text-ochre"
         >
           <svg
             viewBox="0 0 24 24"
