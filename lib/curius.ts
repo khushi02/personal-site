@@ -6,9 +6,10 @@
 //
 // Each link carries a `highlights[]` array — the passages highlighted while
 // reading ("notes"). We surface the highlighted text as the post-it body and the
-// article's author as the subtext. Fetched at build time (ISR every 3 days),
-// limited to the last 7 days and capped so the notes fit on a single row. When an
-// author has multiple highlights, we keep only the shortest one.
+// article's author as the subtext. Fetched at build time (weekly ISR). We show
+// the last COUNT highlights, one per author (most recent wins) so the sources
+// stay varied, and always render exactly COUNT — topping up with repeat authors,
+// then a hardcoded fallback, if the feed is ever short.
 
 export type Highlight = {
   text: string; // the highlighted passage
@@ -27,8 +28,7 @@ const HEADERS = {
   Accept: "application/json",
 };
 
-const MAX_HIGHLIGHTS = 4;
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const COUNT = 4; // always show exactly this many highlights
 const MAX_TEXT = 150; // keep quotes short enough to read as post-its
 
 type CuriusHighlight = { highlight: string; createdDate: string };
@@ -39,30 +39,32 @@ type CuriusLink = {
   highlights?: CuriusHighlight[];
 };
 
+// Seeded from the live feed — the four most recent highlights (one per author),
+// used only if the network fetch fails so the section always renders four cards.
 const HARDCODED_FALLBACK: Highlight[] = [
   {
-    text: "we’re living through this kind of eclipse of the human intellect where we’re in the final days of humans being the primary actors on this planet",
-    author: "borretti.me",
-    url: "https://borretti.me/article/no-one-escapes-the-permanent-underclass",
-    date: "2026-07-01",
+    text: "a mere 10 minutes of teleoperation data was enough to fine-tune Dyna-2 to do bottle cap opening using two five-fingered robot hands",
+    author: "dyna.co",
+    url: "https://www.dyna.co/dyna-2",
+    date: "2026-08-11",
   },
   {
-    text: "Remember, velocity is a vector (it requires direction) and momentum requires mass (the work needs to matter).",
-    author: "Yoni Rechtman",
-    url: "https://99d.substack.com/p/there-will-only-be-four-jobs",
-    date: "2026-06-30",
+    text: "Two strategic paths are emerging between generalized foundation models, which aim to replicate the trajectory of frontier AI labs by scaling models across tasks and form factors, and verticalization…",
+    author: "insightpartners.com",
+    url: "https://www.insightpartners.com/ideas/the-state-of-the-robotics-ecosystem",
+    date: "2026-08-03",
   },
   {
-    text: "An online, distributed generation has developed a coherent aesthetic category for the embodied structure of contemporary, online life, and Backrooms…",
-    author: "katie",
-    url: "https://blog.katiechiou.xyz/p/people-are-missing-the-point-about",
-    date: "2026-06-29",
+    text: "consumers are likely to be the last robotics use case - deploying robots in the home requires the highest safety constraints",
+    author: "github.com",
+    url: "https://github.com/adam-maj/robotics",
+    date: "2026-08-02",
   },
   {
-    text: "the internet is too optimized now, too paved over. everybody's just paying rent to the feed.",
-    author: "kashvi",
-    url: "https://kashvi.substack.com/p/a-memoir-for-the-internet-we-lost",
-    date: "2026-06-24",
+    text: "one of the worst things about tech media, especially as technology has gotten more hostile towards traditional media, is that there isn’t any room for recorded disagreement",
+    author: "Reggie James",
+    url: "https://hipcityreg.substack.com/p/rules-for-recorded-conversations?s=r",
+    date: "2026-07-28",
   },
 ];
 
@@ -96,7 +98,7 @@ function truncate(s: string): string {
 async function tryApi(): Promise<Highlight[]> {
   const res = await fetch(LINKS_URL, {
     headers: HEADERS,
-    next: { revalidate: 259200 }, // every 3 days
+    next: { revalidate: 604800 }, // weekly
   });
   if (!res.ok) throw new Error(`Curius HTTP ${res.status}`);
 
@@ -124,34 +126,44 @@ export async function getRecentHighlights(): Promise<Highlight[]> {
   try {
     const all = await tryApi();
     if (all.length > 0) {
-      const cutoff = Date.now() - WEEK_MS;
-      const recent = all.filter((h) => {
-        const t = new Date(h.date).getTime();
-        return !Number.isNaN(t) && t >= cutoff;
-      });
-      const pool = recent.length > 0 ? recent : all;
+      const byDate = [...all].sort(
+        (a, b) => +new Date(b.date) - +new Date(a.date)
+      );
 
-      // One note per author; when an author has several highlights, keep the
-      // shortest so the post-its stay punchy.
-      const byAuthor = new Map<string, Highlight>();
-      for (const h of pool) {
+      // One note per author (most recent wins) so the post-its stay varied.
+      const picked: Highlight[] = [];
+      const seenAuthors = new Set<string>();
+      for (const h of byDate) {
         const key = h.author.toLowerCase();
-        const current = byAuthor.get(key);
-        if (!current || h.text.length < current.text.length) {
-          byAuthor.set(key, h);
+        if (seenAuthors.has(key)) continue;
+        seenAuthors.add(key);
+        picked.push(h);
+        if (picked.length >= COUNT) break;
+      }
+
+      // If distinct authors ran out before COUNT, top up with the next most
+      // recent highlights (repeat authors allowed) so we always show exactly 4.
+      if (picked.length < COUNT) {
+        const chosen = new Set(picked.map((h) => h.text));
+        for (const h of byDate) {
+          if (picked.length >= COUNT) break;
+          if (!chosen.has(h.text)) picked.push(h);
         }
       }
 
-      return [...byAuthor.values()]
-        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-        .slice(0, MAX_HIGHLIGHTS)
-        .map((h) => ({ ...h, text: truncate(h.text) }));
+      // Last resort: pad from the fallback if the feed itself had < COUNT.
+      for (const h of HARDCODED_FALLBACK) {
+        if (picked.length >= COUNT) break;
+        if (!picked.some((p) => p.url === h.url)) picked.push(h);
+      }
+
+      return picked.slice(0, COUNT).map((h) => ({ ...h, text: truncate(h.text) }));
     }
     console.warn("[curius] API returned no highlights, using hardcoded");
   } catch (err) {
     console.warn("[curius] API failed, using hardcoded:", err);
   }
-  return HARDCODED_FALLBACK.slice(0, MAX_HIGHLIGHTS);
+  return HARDCODED_FALLBACK.slice(0, COUNT);
 }
 
 // The profile link surfaced in the UI's "see more" affordance.

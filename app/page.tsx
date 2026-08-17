@@ -8,9 +8,9 @@ import { getCurrentlyReading } from "@/lib/goodreads";
 import { getRecentEpisodes } from "@/lib/youtube";
 import { getRecentHighlights } from "@/lib/curius";
 
-// Baseline route revalidation (ISR). Individual fetches set their own, shorter
-// windows — Curius every 3 days (drives the effective route cadence), YouTube
-// weekly, Goodreads every 30 days — so each source refreshes on its own clock.
+// Baseline route revalidation (ISR). Individual fetches set their own windows —
+// Curius weekly, YouTube weekly, Goodreads every 30 days — so each source
+// refreshes on its own clock.
 export const revalidate = 604800; // 7 days
 
 function SectionTitle({

@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 // Plays a single YouTube track (audio only, via a hidden IFrame player).
 // Starts muted + autoplaying so unmuting is instant; loops forever.
-const VIDEO_ID = "ws5K_5G_xvI";
-const SONG = "the dress";
-const ARTIST = "dijon";
+const VIDEO_ID = "8neCjSjIzbs";
+const SONG = "coffee";
+const ARTIST = "quinn xcii";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {

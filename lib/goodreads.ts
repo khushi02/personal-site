@@ -27,21 +27,29 @@ const HEADERS = {
 
 const HARDCODED_FALLBACK: Book[] = [
   {
-    title: "Everything Is Tuberculosis",
-    author: "John Green",
-    link: "https://www.goodreads.com/book/show/217150925-everything-is-tuberculosis",
-    cover: null,
-  },
-  {
-    title: "Man's Search for Meaning",
-    author: "Viktor E. Frankl",
-    link: "https://www.goodreads.com/book/show/4069.Man_s_Search_for_Meaning",
-    cover: null,
-  },
-  {
-    title: "Principles for Dealing with the Changing World Order",
+    title:
+      "Principles for Dealing with the Changing World Order: Why Nations Succeed and Fail",
     author: "Ray Dalio",
-    link: "https://www.goodreads.com/book/show/58659367-principles-for-dealing-with-the-changing-world-order",
+    link: "https://www.goodreads.com/book/show/52962238",
+    cover: null,
+  },
+  {
+    title: "The Gate of the Feral Gods (Dungeon Crawler Carl, #4)",
+    author: "Matt Dinniman",
+    link: "https://www.goodreads.com/book/show/57905101",
+    cover: null,
+  },
+  {
+    title: "The Hero of Ages (Mistborn, #3)",
+    author: "Brandon Sanderson",
+    link: "https://www.goodreads.com/book/show/2767793",
+    cover: null,
+  },
+  {
+    title:
+      "Unreasonable Hospitality: The Remarkable Power of Giving People More Than They Expect",
+    author: "Will Guidara",
+    link: "https://www.goodreads.com/book/show/60018618",
     cover: null,
   },
 ];
