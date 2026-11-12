@@ -1,46 +1,5 @@
-import BookList from "@/components/BookList";
-import Projects from "@/components/Projects";
-import Highlights from "@/components/Highlights";
-import Episodes from "@/components/Episodes";
-import Eats from "@/components/Eats";
-import SocialLinks from "@/components/Social";
+import Links from "@/components/Links";
 import NowPlaying from "@/components/NowPlaying";
-import { getCurrentlyReading } from "@/lib/goodreads";
-import { getRecentEpisodes } from "@/lib/youtube";
-import { getRecentHighlights } from "@/lib/curius";
-
-// Baseline route revalidation (ISR). Individual fetches set their own windows —
-// Curius weekly, YouTube weekly, Goodreads every 30 days — so each source
-// refreshes on its own clock.
-export const revalidate = 604800; // 7 days
-
-function SectionTitle({
-  title,
-  action,
-}: {
-  title: string;
-  action?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
-      <h2 className="label">{title}</h2>
-      {action}
-    </div>
-  );
-}
-
-function MoreLink({ href, label }: { href: string; label: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="label text-ochre transition-colors hover:text-terracotta"
-    >
-      {label}
-    </a>
-  );
-}
 
 function BioLink({ href, children }: { href: string; children: string }) {
   return (
@@ -48,129 +7,56 @@ function BioLink({ href, children }: { href: string; children: string }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="text-muted underline decoration-muted/50 decoration-1 underline-offset-[3px] transition-colors hover:decoration-terracotta"
+      className="underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
     >
       {children}
     </a>
   );
 }
 
-export default async function Home() {
-  const [books, episodes, highlights] = await Promise.all([
-    getCurrentlyReading(),
-    getRecentEpisodes(),
-    getRecentHighlights(),
-  ]);
-
+export default function Home() {
   return (
-    <main className="relative mx-auto max-w-2xl px-6 py-16 sm:py-28 lg:max-w-6xl">
+    <main className="relative flex min-h-dvh flex-col items-center px-6 pb-10 pt-16 sm:pb-11 sm:pt-[72px]">
       <NowPlaying />
-      <div className="flex flex-col gap-16">
-        {/* Header / Intro */}
-        <header className="flex flex-col gap-5">
-          <p className="label">
-            {new Date().toLocaleDateString("en-US", {
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-          <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">
-            khushi&apos;s notebook
-          </h1>
-          <p className="font-serif text-2xl italic text-muted">
-            a curated collection of places and ideas
-          </p>
-          <p className="max-w-prose text-sm leading-relaxed text-muted">
-            currently @ <BioLink href="https://predicate.io/">predicate</BioLink>
-            . previously @{" "}
-            <BioLink href="https://geometry.xyz">geometry</BioLink>,{" "}
-            <BioLink href="https://www.generalcatalyst.com/stories/c14-ramping-the-next-billion-digital-asset-users">
-              c14
-            </BioLink>
-            , <BioLink href="https://www.spacex.com/">spacex</BioLink>,{" "}
-            <BioLink href="https://www.cs.cmu.edu/index">carnegie mellon</BioLink>
-            .
-          </p>
-          <div className="pt-1">
-            <SocialLinks />
-          </div>
-        </header>
+      <div className="flex-1" />
 
-        {/* Projects — featured from GitHub, full width */}
-        <section className="flex flex-col gap-6">
-          <SectionTitle
-            title="projects"
-            action={<MoreLink href="https://github.com/khushi02" label="github" />}
-          />
-          <Projects />
-        </section>
+      <header className="flex flex-col items-center text-center">
+        {/* Typographic ornament: hairline, diamond, hairline. */}
+        <svg
+          viewBox="0 0 120 12"
+          width="120"
+          height="12"
+          fill="none"
+          aria-hidden="true"
+          className="mb-[26px] stroke-muted"
+        >
+          <path d="M0 6h48M72 6h48" />
+          <path d="M60 1.5l4.500 4.500l-4.500 4.500l-4.500-4.500z" />
+        </svg>
 
-        {/* Top spread: The Dry Run (left) + Currently Reading (right) */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-0">
-          <section className="flex flex-col gap-6 lg:pr-14">
-            <SectionTitle
-              title="the dry run"
-              action={
-                <MoreLink
-                  href="https://www.youtube.com/@TheDryRunPod"
-                  label="youtube"
-                />
-              }
-            />
-            {/* Show as many episodes as there are books (when enough exist). */}
-            <Episodes episodes={episodes.slice(0, books.length)} />
-          </section>
+        <h1 className="text-[40px] leading-[1.1] tracking-[-0.045em] sm:text-[46px]">
+          khushi wadhwa
+        </h1>
 
-          <section className="flex flex-col gap-6 lg:border-l lg:border-line lg:pl-14">
-            <SectionTitle
-              title="currently reading"
-              action={
-                <MoreLink
-                  href="https://www.goodreads.com/user/show/169322661-khushi"
-                  label="goodreads"
-                />
-              }
-            />
-            <BookList books={books} />
-          </section>
-        </div>
+        <p className="mt-[22px] max-w-[30rem] text-lg leading-normal sm:text-xl sm:leading-normal">
+          currently @ <BioLink href="https://predicate.io/">predicate</BioLink>,
+          conversing @{" "}
+          <BioLink href="https://www.youtube.com/@TheDryRunPod">dry run</BioLink>
+          . <br className="hidden sm:inline" />
+          previously @ <BioLink href="https://geometry.xyz">geometry</BioLink>,{" "}
+          <BioLink href="https://www.generalcatalyst.com/stories/c14-ramping-the-next-billion-digital-asset-users">
+            c14
+          </BioLink>
+          , <BioLink href="https://www.spacex.com/">spacex</BioLink>,{" "}
+          <BioLink href="https://www.cs.cmu.edu/index">carnegie mellon</BioLink>.
+        </p>
+      </header>
 
-        {/* Highlights — full width */}
-        <section className="flex flex-col gap-6">
-          <SectionTitle
-            title="highlights"
-            action={
-              <MoreLink
-                href="https://curius.app/khushi-wadhwa"
-                label="see more on curius"
-              />
-            }
-          />
-          <Highlights highlights={highlights} />
-        </section>
+      <div className="flex-1" />
 
-        {/* Good Eats — three NYC columns, full width */}
-        <section className="flex flex-col gap-6">
-          <SectionTitle
-            title="nyc hit list"
-            action={
-              <MoreLink
-                href="https://beliapp.co/app/khushi02"
-                label="see more on beli"
-              />
-            }
-          />
-          <Eats />
-        </section>
-
-        {/* Footer */}
-        <footer className="flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <span className="label">
-            © {new Date().getFullYear()} khushi wadhwa
-          </span>
-          <SocialLinks />
-        </footer>
-      </div>
+      <footer className="-mx-4 pt-12 sm:mx-0">
+        <Links />
+      </footer>
     </main>
   );
 }

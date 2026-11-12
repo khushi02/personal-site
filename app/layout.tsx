@@ -1,24 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, EB_Garamond } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
-// Clean grotesque for labels, meta, and body copy.
-const inter = Inter({
+// One typeface for everything: a light, bookish Garamond.
+const serif = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-// Refined serif for names, titles, and quotes — the japandi editorial voice.
-const serif = EB_Garamond({
-  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "khushi's notebook",
-  description: "a curated collection of places and ideas",
+  title: "khushi wadhwa",
+  description:
+    "currently @ predicate, conversing @ dry run. previously @ geometry, c14, spacex, carnegie mellon.",
 };
 
 export default function RootLayout({
@@ -27,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${serif.variable}`}>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={serif.variable}>
+      <body className="font-serif">{children}</body>
     </html>
   );
 }

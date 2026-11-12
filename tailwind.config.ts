@@ -8,21 +8,17 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
       },
-      maxWidth: {
-        content: "42rem",
-      },
       colors: {
-        // Ochre Sunset: a warm cream paper, soft charcoal ink, hairline borders,
-        // a brighter terracotta for hovers, and a mustard-ochre utility accent.
-        ink: "#3a3128",
-        muted: "#948b7b",
-        line: "#d6c9ad",
-        paper: "#ece1cb",
-        terracotta: "#b05e34",
-        ochre: "#9a6f22",
+        // Warm ivory cotton cardstock: cream sheet, warm near-black ink,
+        // hairline rules, and a terracotta that only appears on hover.
+        paper: "#f6f0e2",
+        ink: "#2b2620",
+        muted: "#6f6657",
+        line: "#cfc3a8",
+        rule: "#b9ac90",
+        accent: "#a2552d",
       },
     },
   },

@@ -108,17 +108,15 @@ export default function NowPlaying() {
         onClick={toggle}
         aria-label={muted ? `Play ${SONG} by ${ARTIST}` : "Mute music"}
         title={muted ? "tap to play" : "tap to mute"}
-        className="absolute right-6 top-16 z-10 flex items-center gap-2.5 text-muted transition-colors hover:text-ink sm:top-28"
+        className="absolute right-6 top-6 z-10 flex items-center gap-2.5 text-muted transition-colors hover:text-ink sm:right-10 sm:top-9"
       >
         <span className="flex flex-col items-end leading-tight">
-          <span className="font-sans text-[10px] uppercase tracking-[0.2em]">
-            now playing
-          </span>
-          <span className="mt-0.5 hidden font-serif text-sm italic sm:inline">
+          <span className="text-sm tracking-[0.16em]">now playing</span>
+          <span className="hidden text-base italic sm:inline">
             {SONG} · {ARTIST}
           </span>
         </span>
-        <span className="eq text-ochre" data-playing={playing} aria-hidden>
+        <span className="eq text-ink" data-playing={playing} aria-hidden>
           <span />
           <span />
           <span />
